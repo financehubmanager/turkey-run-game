@@ -575,4 +575,13 @@ export function drawWorld(ctx, state, t, best) {
   }
   drawHud(ctx, state, best);
   drawBanner(ctx, state);
+  // v2: red danger frame while the SPOTTED! warning is up — the farmer
+  // is about to catch the turkey, and the frame must say so at a glance.
+  if (state.banner === 'SPOTTED! RUN!' && state.bannerT > 0) {
+    ctx.fillStyle = 'rgba(214,58,47,0.07)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(214,58,47,0.55)';
+    ctx.lineWidth = 16;
+    ctx.strokeRect(8, 8, W - 16, H - 16);
+  }
 }
