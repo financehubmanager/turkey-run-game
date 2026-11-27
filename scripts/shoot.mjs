@@ -7,7 +7,9 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'no
 import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { chromium } from 'playwright-core';
+import { createRequire } from 'node:module';
+const require = createRequire('/home/hatch/workspace/makefun/budget-site/scripts/x.js');
+const { chromium } = require('playwright-core');
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = process.env.REPO_ROOT || join(here, '..');
