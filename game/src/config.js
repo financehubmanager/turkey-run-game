@@ -69,6 +69,13 @@ export const EVENTS = {
   STAGE: 32,
   JUMP: 64,
   SLIDE: 128,
+  // v2: the farmer is close enough to spot the turkey — warn with
+  // sound + banner + red frame (criterion #3: feedback when spotted).
+  SPOTTED: 256,
+  // v2: gold corn and the life feather get their own sounds, so a
+  // valuable pickup reads differently from ordinary corn.
+  GOLD: 512,
+  FEATHER: 1024,
 };
 
 export const SCREENS = {
