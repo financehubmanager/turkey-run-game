@@ -4,7 +4,9 @@
 // caught or escaped -> restart. Also asserts zero console errors and zero
 // requests outside localhost. Usage: node scripts/probe-playtest.mjs
 import { spawn } from 'node:child_process';
-import { chromium } from 'playwright-core';
+import { createRequire } from 'node:module';
+const require = createRequire('/home/hatch/workspace/makefun/budget-site/scripts/x.js');
+const { chromium } = require('playwright-core');
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
