@@ -119,6 +119,9 @@ function main() {
           if (events & EVENTS.JUMP) audio.jump();
           if (events & EVENTS.SLIDE) audio.slide();
           if (events & EVENTS.PICKUP) audio.pickup();
+          if (events & EVENTS.GOLD) audio.gold();
+          if (events & EVENTS.FEATHER) audio.feather();
+          if (events & EVENTS.SPOTTED) audio.spotted();
           if (events & EVENTS.STUMBLE) audio.stumble();
           if (events & EVENTS.HIDE) audio.gobble();
           if (events & EVENTS.STAGE) audio.stage();
