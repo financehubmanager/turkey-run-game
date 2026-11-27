@@ -39,6 +39,7 @@ export function createWorld(seed) {
       banner: null,
       bannerT: 0,
       shakeT: 0,
+      spottedWarned: false,
       escapedAt: 0,
     };
   }
@@ -167,6 +168,19 @@ export function createWorld(seed) {
       return EVENTS.OVER;
     }
 
+    // v2: the farmer is close enough to spot the turkey. Warn once —
+    // sound + banner + red frame — until the turkey pulls away again.
+    // (gap 140 is two stumbles from the start; the HUD meter turns red
+    // at 90, so the warning comes first.)
+    if (state.gap <= 140 && !state.spottedWarned) {
+      state.spottedWarned = true;
+      state.banner = 'SPOTTED! RUN!';
+      state.bannerT = 1.6;
+      events |= EVENTS.SPOTTED;
+    } else if (state.gap > 200) {
+      state.spottedWarned = false;
+    }
+
     // Jump / double jump / slide / hide. One mid-air jump per leap lets
     // the turkey clear two dangers piled together.
     if (input.jump && !t.hidden && (t.onGround || t.airJumps < 1)) {
@@ -272,10 +286,22 @@ export function createWorld(seed) {
         pk.taken = true;
         const def = PICKUPS[pk.kind];
         state.score += def.score;
-        if (pk.kind === 'feather' && state.lives < 3) state.lives += 1;
         if (pk.kind === 'corn') state.gap = Math.min(RUN.gapMax, state.gap + RUN.cornGapBonus);
+        if (pk.kind === 'feather') {
+          // A life back, with its own sound and a banner — the rarest
+          // pickup should read as a small victory, not plain corn.
+          if (state.lives < 3) {
+            state.lives += 1;
+            state.banner = '+1 LIFE!';
+            state.bannerT = 1.2;
+          }
+          events |= EVENTS.FEATHER;
+        } else if (pk.kind === 'goldcorn') {
+          events |= EVENTS.GOLD;
+        } else {
+          events |= EVENTS.PICKUP;
+        }
         burst(pk.x, pk.y, pk.kind === 'goldcorn' ? '#ffd94d' : '#ffb347', 7, 110);
-        events |= EVENTS.PICKUP;
       }
     }
     state.pickups = state.pickups.filter((pk) => !pk.taken && pk.x > -60);
