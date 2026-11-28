@@ -67,6 +67,34 @@ function drawBackground(ctx, state, t) {
     drawCloud(ctx, cx, 56 + (i % 2) * 34, 0.8 + (i % 3) * 0.25, 'rgba(255,244,214,0.85)');
   }
 
+  // v4: the middle sky band (y ~160-280) was empty in the farmyard and
+  // kitchen shots — birds and drifting autumn leaves fill it without
+  // touching the HUD, the banner, or the sun. Positions scroll with
+  // distance like the clouds, so every frame stays deterministic.
+  const skyScroll = state.distance * RUN.pxPerMetre * 0.18;
+  ctx.strokeStyle = 'rgba(90,50,20,0.75)';
+  ctx.lineWidth = 2.5;
+  for (let i = 0; i < 3; i += 1) {
+    const bx = (((i * 430 - skyScroll) % 1500) + 1500) % 1500 - 60;
+    const by = 168 + (i % 3) * 42;
+    ctx.beginPath();
+    ctx.moveTo(bx - 12, by); ctx.lineTo(bx - 2, by - 7); ctx.lineTo(bx + 8, by);
+    ctx.moveTo(bx + 14, by + 4); ctx.lineTo(bx + 22, by - 2); ctx.lineTo(bx + 30, by + 4);
+    ctx.stroke();
+  }
+  const leafColors = ['#d97b2f', '#c96a1e', '#b3402a'];
+  for (let i = 0; i < 7; i += 1) {
+    const lx = (((i * 211 - skyScroll * 1.6) % 1500) + 1500) % 1500 - 60;
+    const ly = 190 + ((i * 37) % 110);
+    ctx.save();
+    ctx.translate(lx, ly);
+    ctx.rotate((i * 0.9) % 3.14);
+    ctx.globalAlpha = 0.85;
+    ctx.fillStyle = leafColors[i % 3];
+    ctx.beginPath(); ctx.ellipse(0, 0, 7, 4, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
   // Parallax silhouettes per stage.
   const far = state.distance * RUN.pxPerMetre * 0.25;
   ctx.fillStyle = 'rgba(122,74,32,0.35)';
@@ -182,9 +210,30 @@ function drawTurkey(ctx, state, t) {
   const legSwing = tk.onGround ? Math.sin(phase) * 14 : 8;
   const bodyY = tk.y - (tk.sliding ? 26 : 46) + (tk.onGround ? Math.abs(Math.sin(phase)) * -2 : 0);
   const alpha = tk.invulnT > 0 && Math.floor(t * 12) % 2 === 0 ? 0.45 : 1;
+  // v4: staged shots may scale the turkey up (tk.scale, set only in
+  // shots.js — live play never sets it, so the hitbox and the live
+  // render are untouched). Scale about a point 40 px above the feet so
+  // the feet stay planted at the same spot.
+  const s = tk.scale || 1;
   ctx.save();
   ctx.globalAlpha = alpha;
-  ctx.translate(TURKEY_X, bodyY);
+  ctx.translate(TURKEY_X, bodyY - 40 * (s - 1));
+  ctx.scale(s, s);
+
+  if (!tk.onGround) {
+    // Jump motion trail: two fading ghosts of the body along the leap
+    // arc, so the jump reads in a frozen screenshot as well as live.
+    const ghosts = [[-38, 30, 0.22], [-70, 54, 0.13]];
+    for (const [gx, gy, ga] of ghosts) {
+      ctx.save();
+      ctx.globalAlpha = alpha * ga;
+      ctx.fillStyle = '#8a5a2b';
+      ctx.beginPath(); ctx.ellipse(gx, gy, 34, 26, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#a06a35';
+      ctx.beginPath(); ctx.ellipse(gx + 26, gy - 22, 13, 13, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+  }
 
   // Tail fan: five autumn feathers fanning behind.
   const tailColors = ['#b3402a', '#d97b2f', '#e8b34b', '#a83a24', '#c96a1e'];
