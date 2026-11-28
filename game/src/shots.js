@@ -80,9 +80,19 @@ export function stageShot(name, seed) {
     st.turkey.y = GROUND_Y - 120;
     st.turkey.vy = -320;
     st.turkey.onGround = false;
+    // v4: the turkey reads bigger in the frame (staging-only scale;
+    // live hitbox and render untouched) and the jump leaves dust.
+    st.turkey.scale = 1.35;
+    st.particles = [
+      { x: 220, y: GROUND_Y - 4, vx: 0, vy: 0, life: 0.4, max: 0.45, size: 6, color: '#e3d3ae' },
+      { x: 200, y: GROUND_Y - 8, vx: 0, vy: 0, life: 0.35, max: 0.45, size: 5, color: '#e3d3ae' },
+      { x: 238, y: GROUND_Y - 10, vx: 0, vy: 0, life: 0.3, max: 0.45, size: 4, color: '#d9c49a' },
+    ];
     st.obstacles = [
       { kind: 'oven', x: 330, y: GROUND_Y - 88, width: 88, height: 88, hit: false },
-      { kind: 'knife', x: 860, y: 30, width: 44, height: 92, vy: 300, falling: true, stuckT: 0, hit: false },
+      // v4: knife dropped to y=150 — its tip no longer touches the
+      // banner text (KECIL-1 v3); it hangs mid-fall, clear of all text.
+      { kind: 'knife', x: 860, y: 150, width: 44, height: 92, vy: 300, falling: true, stuckT: 0, hit: false },
       { kind: 'rollingpin', x: 700, y: GROUND_Y - 26, width: 58, height: 26, vx: -130, roll: 1.2, hit: false },
       { kind: 'haybale', x: 900, y: GROUND_Y - 58, width: 78, height: 58, hit: false },
       { kind: 'line', x: 1080, y: GROUND_Y - 58, width: 90, height: 24, hit: false },
@@ -133,9 +143,22 @@ export function stageShot(name, seed) {
   st.turkey.vy = -260;
   st.turkey.onGround = false;
   st.turkey.runPhase = 2.4;
+  // v4: the turkey reads bigger in the frame (staging-only scale 1.35;
+  // live hitbox and render untouched) and the jump leaves dust.
+  st.turkey.scale = 1.35;
+  // Takeoff dust frozen at the fence — the real jump's dust burst is
+  // long gone by the time this frame is staged, so stage the puffs.
+  st.particles = [
+    { x: 214, y: GROUND_Y - 4, vx: 0, vy: 0, life: 0.4, max: 0.45, size: 6, color: '#e3d3ae' },
+    { x: 196, y: GROUND_Y - 8, vx: 0, vy: 0, life: 0.35, max: 0.45, size: 5, color: '#e3d3ae' },
+    { x: 232, y: GROUND_Y - 10, vx: 0, vy: 0, life: 0.3, max: 0.45, size: 4, color: '#d9c49a' },
+    { x: 178, y: GROUND_Y - 2, vx: 0, vy: 0, life: 0.4, max: 0.45, size: 5, color: '#e3d3ae' },
+  ];
   st.obstacles = [
     { kind: 'fence', x: 296, y: GROUND_Y - 64, width: 46, height: 64, hit: false },
-    { kind: 'knife', x: 640, y: 56, width: 44, height: 92, vy: 260, falling: true, stuckT: 0, hit: false },
+    // v4: knife dropped to y=150 — its tip no longer touches the
+    // banner text (KECIL-1 v3); it hangs mid-fall, clear of all text.
+    { kind: 'knife', x: 640, y: 150, width: 44, height: 92, vy: 260, falling: true, stuckT: 0, hit: false },
     { kind: 'rollingpin', x: 760, y: GROUND_Y - 26, width: 58, height: 26, vx: -130, roll: 1.2, hit: false },
     { kind: 'haystack', x: 920, y: GROUND_Y - 66, width: 96, height: 66, hit: false },
     { kind: 'pumpkin', x: 1100, y: GROUND_Y - 46, width: 64, height: 46, hit: false },
