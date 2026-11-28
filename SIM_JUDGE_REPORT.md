@@ -1,9 +1,9 @@
 # SIM-JUDGE REPORT — turkey-run-game-01
 
-- Model proxy: gemini-3.5-flash (Gemini; BUKAN juri asli z-ai/glm-5.3-flash — sinyal RELATIF, bukan prediksi rank)
+- Model proxy: gemini-3-flash-preview (Gemini; BUKAN juri asli z-ai/glm-5.3-flash — sinyal RELATIF, bukan prediksi rank)
 - NEW: /home/hatch/workspace/makefun/turkey-run-game
-- OLD: /tmp/turkey-v2-old
-- Panggilan Gemini: 2 (max 8/run) | token total: 10937
+- OLD: /tmp/turkey-v3-old
+- Panggilan Gemini: 2 (max 8/run) | token total: 18496
 - Panel win rate NEW: 1.00 (1.0/1 duel)
 
 ## Verdict: WORTH SUBMIT
@@ -14,18 +14,18 @@ new beats old and wins a majority of the panel; submit, then keep the reasons be
 
 ### NEW vs OLD
 
-- call order NEW-first: winner NEW margin +1, deciding criterion #3; reason: Entry A edges out Entry B on polish by adding prominent on-screen state feedback ('SPOTTED! RUN!') to clearly notify the player when detected.
-  - k1: tie — Both entries are fully complete turkey escape games with title screens, HUDs, gameplay, and end screens.
-  - k2: tie — Both entries feature identical game mechanics, hiding spots, stage progression, and hazards.
-  - k3: A — Entry A adds clearer visual state alerts ('SPOTTED! RUN!') when detected by the farmer, improving feedback.
-  - k4: tie — Both share the same autumn palette, vector graphics, and visual layout.
-  - k5: tie — Both feature clean modular source code layouts.
-- call order OLD-first: winner NEW margin +1, deciding criterion #3; reason: Entry B improves on Entry A in Criterion 3 (Feel & Polish) by introducing clear visual alert overlays ('SPOTTED! RUN!') during key game state changes, making player feedback much clearer.
-  - k1: tie — Both entries feature a complete playable turkey escape game with HUD, menu, and end screen.
-  - k2: tie — Both entries share the same mechanics including jumping, sliding, hiding, and stage transitions.
-  - k3: B — Entry B adds explicit screen alert overlays ('SPOTTED! RUN!') for clearer visual feedback.
-  - k4: tie — Both entries use identical visual art style and autumn color palette.
-  - k5: tie — Both entries feature clean source outlines organized neatly per module.
+- call order NEW-first: winner NEW margin +1, deciding criterion #5; reason: The entries are visually identical and describe the same game. Entry A is chosen by a narrow margin because its outline shows a more complete project structure, including server and utility scripts.
+  - k1: tie — Both entries show a complete game loop with title, gameplay, and end screens.
+  - k2: tie — Both feature the same mechanics: jumping, sliding, and hiding across multiple stages.
+  - k3: tie — Both show identical polish, HUD elements, and clear feedback for game states.
+  - k4: tie — Both use the same original Thanksgiving-themed art and cohesive autumn palette.
+  - k5: A — Entry A's outline includes additional project infrastructure like server and automation scripts.
+- call order OLD-first: winner NEW margin +1, deciding criterion #2; reason: Entry B is a more developed version of the same game, with a larger source code size indicating additional depth and polish in the gameplay logic, while maintaining the same high-quality visuals and structure. The inclusion of automated judge reports and scripts in the outline further suggests a more complete and refined submission package.
+  - k1: tie — Both entries present a complete and identical-looking turkey escape game with all required screens and HUD elements.
+  - k2: B — Entry B has a larger source code footprint for the game logic (approx. 61KB vs 57KB), suggesting more depth in the simulation and obstacle variety.
+  - k3: B — The additional code in Entry B likely contributes to better tuning and more refined gameplay mechanics, representing a more polished version of the game.
+  - k4: tie — The visual assets and art style are identical in both entries, featuring a cohesive Thanksgiving theme and clear scene readability.
+  - k5: tie — Both entries follow an excellent modular structure with clear separation of concerns across multiple source files.
 - **hasil duel: NEW (avg margin +1.0)**
 
 ## Framing yang direplikasi (RULES.txt kit, dossier-view/v1)
