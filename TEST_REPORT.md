@@ -1,98 +1,119 @@
-# TEST REPORT — Gobble Dash v2 (Turkey Run Game) — LAYAK SUBMIT
+# TEST REPORT — Gobble Dash v3 (Turkey Run Game) — LAYAK SUBMIT
 
 **Bounty:** make.fun `turkey-run-game-01` — $250, 20 tempat
 **Repo lokal:** `~/workspace/makefun/turkey-run-game/`
-**Tester:** sesi ini (independen), 28 Nov 2026 ~05:30–06:00 WIB
-**Persetujuan user:** "User menyetujui revisi Turkey v2 pada 28 Nov 2026 05:18 WIB — memilih 'Ya, buat revisi Turkey v2' di chat make.fun; uji sampai selesai tanpa konfirmasi lagi."
-**Build yang diuji:** commit lokal `00c1e7b` (builder v2), working tree bersih.
-**Verdict: LAYAK SUBMIT — 0 KRITIS, 0 SEDANG, 3 KECIL.** Tidak ada cacat yang membenarkan fixer sebelum cutoff ronde 2 (09:00 WIB 28 Nov).
-
-Semua klaim BUILD_REPORT.md diukur ulang sendiri, bukan dipercaya. Yang tidak bisa saya verifikasi dari BUILD_REPORT: tidak ada — semua klaim utama terkonfirmasi.
+**Tester:** sesi ini (independen), 28 Nov 2026 ~10:20–10:45 WIB
+**Otorisasi:** "Otomasi penuh make.fun disetujui user 26 Nov 2026 22:22 WIB — watcher memindai tiap 30 menit dan menjalankan bounty lolos filter sampai SUBMIT tanpa persetujuan; revisi atas ranking jauh adalah aturan berdiri user 27 Nov 2026."
+**Build yang diuji:** commit lokal `ad11a85` (builder v3), working tree bersih.
+**Verdict: LAYAK SUBMIT — 0 KRITIS, 0 SEDANG, 3 KECIL.** Semua klaim BUILD_REPORT.md
+terkonfirmasi lewat pengukuran ulang sendiri. Tidak ada cacat yang membenarkan fixer
+sebelum cutoff ronde 3 (21:00 WIB 28 Nov).
 
 ## 1. makefun check — dijalankan sendiri (kit nested)
 
-Kit ternyata NESTED: `~/workspace/makefun/turkey-run-game-01-kit/turkey-run-game-01-kit/cli/makefun.mjs`
-(panggilan dari level luar gagal `MODULE_NOT_FOUND` — bukan cacat entry, hanya path kit).
-Dari kit yang benar: **4 passed, 1 failed, 15 skipped, 5 dicek saat submission.**
-Satu-satunya failed adalah `transcripts_present` — ekspektasi pre-bundle (bundle dibuat parent
-saat submit). Sama persis dengan klaim builder.
+Dari `~/workspace/makefun/turkey-run-game-01-kit/turkey-run-game-01-kit/cli/makefun.mjs`:
+**4 passed, 1 failed, 15 skipped, 5 dicek saat submission.** Sama persis dengan klaim
+builder dan dengan v2. Satu-satunya failed adalah `transcripts_present` — ekspektasi
+pre-bundle (bundle dibuat parent saat submit). Catatan dari output check: kit lokal
+level 58 vs situs level 61 (hanya catatan, bukan kegagalan); entry deadline yang
+ditulis check adalah 2026-11-29T02:00:00Z — cutoff ronde 3 (21:00 WIB 28 Nov) tetap
+yang mengikat untuk penempatan ronde.
 
 ## 2. Determinisme + integritas — diukur sendiri
 
 | Uji | Hasil |
 | --- | --- |
-| `main.ts` 2× (MAKEFUN_OUTPUT_DIR=/tmp/turkey-t1, /tmp/turkey-t2) | **IDENTICAL** (`diff -r` kosong) |
-| dossier.json | sha256 `995f4cd36f667447a16574683309225759f364186d929707c19d1019678a1b4e`, **398.451 byte** — sama persis dengan klaim builder |
-| Direktori builder (/tmp/turkey-v2-d1 vs d2) | IDENTICAL (diff kosong) |
-| `vendor/makefun-game.ts` | sha256 `dc671875…` = kit starter (`starter/vendor/makefun-game.ts`) — **tidak disentuh** |
+| `main.ts` 2× (`/tmp/turkey-v3-t1` vs `/tmp/turkey-v3-t2`) | **IDENTICAL** (`diff -r` kosong) |
+| dossier.json | sha256 `697ea57e6cabbd375d594765b18ffb26ded248c7a8c7cee76a70267bb75624a7`, **407.216 byte** — sama persis dengan klaim builder |
+| `vendor/makefun-game.ts` | sha256 `dc671875…` = kit starter — **tidak disentuh** |
 | `grep http://\|https://` di `game/` | **0** — tidak ada referensi eksternal |
+| `config.js` (tuning) | tidak disentuh (diff v3 hanya `render.js` + `shots.js` + screenshot + BUILD_REPORT) |
 
-## 3. Probe feedback v2 — dijalankan sendiri 2×
+## 3. Re-shoot independen — screenshot = hasil kode, byte-identik
 
-`scripts/probe-v2-feedback.mjs`:
-- **Run 1: 14/16** — FAIL "gobble on start (3 osc)" (osc=2) dan FAIL "jump -> +1 osc" (osc 2→4).
-- **Run 2: 16/16 PASS** — semua lolos, termasuk SPOTTED banner + suara +1 osc,
-  frame merah sudut (rgb 177,69,43), SPOTTED sekali + re-arm, goldcorn +4 osc,
-  feather +1 nyawa + banner '+1 LIFE!' + suara, 0 console/page error, 0 request non-localhost.
-- Penilaian: kedua FAIL run 1 adalah **flakiness penghitungan oscillator yang sensitif timing**
-  (suara TERBUKTI berbunyi — jump menambah osc, gobble menambah osc; hanya jumlah pastinya
-  bergeser antar-run), bukan cacat game. Bukan alasan menahan submit; dicatat sebagai observasi.
+`scripts/shoot.mjs` dijalankan sendiri di salinan repo (`/tmp/turkey-v3-shoot`, port 8093):
+**shoot OK, 0 page error, keempat sha256 IDENTIK dengan yang di-commit** (cover
+`08e85b15…`, title `9d5254a1…`, kitchen `4620cc69…`, escaped `111af1e9…`).
+Screenshot yang diserahkan adalah render asli kode v3, bukan gambar lama.
 
 ## 4. Screenshot — dilihat langsung keempatnya
 
 | File | Yang terlihat (pengamatan sendiri) |
 | --- | --- |
-| `1-cover.jpg` | Kalkun melompat pagar; petani + jala di kiri; pisau jatuh terbaca sebagai pisau (handle gelap + bilah runcing, tip-first); label "HIDE! ↓" jelas; HUD lengkap (SCORE 1250, BEST 1250, 275/1200 m, THE FARMYARD, 3 nyawa, meter FARMER). |
-| `2-title.jpg` | "GOBBLE DASH — The Great Turkey Escape"; kincir 4 bilah + vane — langsung terbaca sebagai kincir, bukan salib; tombol "START THE RUN"; instruksi; best 1250. |
-| `3-kitchen.jpg` | Banner "THE KITCHEN YARD" utuh; oven "HOT!"; rolling pin; laundry line "DUCK!"; pisau di kanan atas (x≈1010) — TIDAK menembus banner; HUD 940/1200 m, SCORE 1900. |
-| `4-escaped.jpg` | "ESCAPED!" hijau; forest gate + kalkun; Score 2900; tombol "RUN AGAIN" + "or press R". Set shot lengkap per kriteria #1: title + 2 run HUD + end screen restart. |
+| `1-cover.jpg` (1280×480, 54.940 B) | Banner **"SPOTTED! RUN!"** besar + frame merah di keempat tepi + meter **FARMER merah** + petani persis di belakang kalkun dengan jala terulur — kejaran TERBACA tanpa ambigu. Pisau besar (gagang cokelat + bilah perak runcing, tip-first) jelas sebagai pisau, tidak menyentuh HUD bar. Kalkun melompat pagar; label "HIDE! ↓" jelas; HUD lengkap. |
+| `2-title.jpg` (1280×480, 72.919 B) | Byte-identical dengan v2, tidak berubah. "GOBBLE DASH", kincir terbaca sebagai kincir, tombol START THE RUN, instruksi, best 1250. |
+| `3-kitchen.jpg` (1280×480, 66.508 B) | Pisau besar di kanan atas, **lepas dari cakram matahari**; oven dengan **glow oranye + "HOT!" ber-outline gelap** terbaca sebagai oven panas; banner "THE KITCHEN YARD" utuh; "DUCK!" di atas laundry line; HUD 940/1200 m, SCORE 1900. |
+| `4-escaped.jpg` (1280×480, 65.986 B) | Label **"FOREST GATE" kini di atas kanopi pohon** — tidak lagi menimpa elips pohon kiri (KECIL-A v2 tertutup). "ESCAPED!" hijau, Score 2900, "RUN AGAIN" + "or press R". |
 
-**Frame SPOTTED (dari probe saya sendiri, /tmp/turkey-v2-spotted.png) — dilihat langsung:**
-Banner "SPOTTED! RUN!" besar di tengah + frame merah di keempat tepi + petani persis di
-belakang kalkun + meter FARMER merah. **Terbaca tanpa ambigu sebagai peringatan, bukan bug.**
+**Catatan akurasi klaim builder:** builder menulis jala "hampir menyentuh ekor kalkun".
+Di frame render, jarak jala ke ekor ≈ 40 px pada lebar 1280 (≈3% lebar frame) — dekat
+dan terbaca mengejar, tapi tidak benar-benar nyaris menyentuh. Bukan cacat; klaimnya
+sedikit berlebihan, efek visualnya tercapai.
+
+**Klaim pisau live tidak berubah — terverifikasi dari kode:** `config.js:43`
+`knife: { width: 34, height: 70 }` dan spawn di `world.js:84-87` memakai
+`def.width/def.height` itu; scale render `ks = h/70` (`render.js`) = 1,0 untuk pisau
+live, 1,31 hanya untuk shot staged (44×92). Render live tidak berubah.
 
 ## 5. Playtest live — dijalankan sendiri (headless Chromium)
 
-`scripts/probe-playtest.mjs`, autopilot, run saya sendiri:
-**ESCAPED 1200 m, skor 4285, 3 nyawa** (builder: 3885/2 nyawa — variansi autopilot,
-keduanya ESCAPED); restart (R) → play, distance 3,15 m, over null; **0 console/page error;
+`scripts/probe-playtest.mjs` (port 8094), autopilot, run saya sendiri:
+**ESCAPED 1200 m, skor 3210, 3 nyawa** (builder: 4120 — variansi autopilot, keduanya
+ESCAPED); restart (R) → play, distance 2,8 m, over null; **0 console/page error;
 0 external request** (bukti main offline — finalist review memainkannya offline).
-SPOTTED, suara jump/slide, dan pickup berbeda terverifikasi lewat probe §3 di atas.
+Title → play → pause → play semua transisi benar.
 
-## 6. Temuan builder yang saya konfirmasi (penting untuk push)
+## 6. Probe feedback v2 — dijalankan sendiri 3×
 
-Remote HEAD terverifikasi masih **`6aedab7` "Add screenshot 4-escaped"** — sama dengan commit
-yang di-submit v1. Jadi `b3f2df6` (suara lompat/slide, windmill, pisau, HIDE!, haystack),
-`3d3d056`, dan `00c1e7b` (v2) **semuanya hanya lokal, belum pernah di-push**. Ronde 1
-(1518/4864, 55,5%) menilai game TANPA perbaikan itu. v2 mengirim semuanya sekaligus —
-lonjakan kualitas v1→v2 lebih besar dari "revisi kecil".
+`scripts/probe-v2-feedback.mjs` (16 cek):
+- **Run 1: 2 FAIL** (cek oscillator-count awal — gobble/jump; semua cek SPOTTED,
+  goldcorn, feather, dan 0 error PASS).
+- **Run 2: 16/16 PASS. Run 3: 16/16 PASS.**
+- Penilaian: pola yang sama persis seperti tester v2 (run 1: 14/16, run 2: 16/16).
+  Penghitungan oscillator sensitif timing; suara TERBUKTI berbunyi di semua run
+  (jump/gobble/SPOTTED/goldcorn/feather semua menambah osc). Bukan cacat game,
+  dicatat sebagai observasi.
 
-## Skor mandiri per kriteria brief (1–5)
+## 7. Penilaian terhadap brief juri (kriteria berurut, §5 turkey)
 
-| # | Kriteria | Skor | Alasan |
-| --- | --- | --- | --- |
-| 1 | Complete game, shown | 5 | Title + 2 run HUD + end screen restart; semua unsur (kalkun, petani, oven, pisau) terlihat di set |
-| 2 | Fun & depth | 4 | Lompat/double-jump/slide/hide + 3 stage makin sulit + SPOTTED menambah ketegangan saat farmer dekat |
-| 3 | Feel & polish | 4 | Semua feedback kini bersuara (jump, slide, pickup, gold, feather, stumble, stage, hide, spotted, caught, escaped) + visual (shake, flash merah, frame merah SPOTTED, banner). Tahan di 4: lompat tanpa efek visual khusus (KECIL-C) |
-| 4 | Look & originality | 4 | Windmill/pisau/HIDE! terverifikasi terbaca; palet autumn koheren; art sendiri. Minus: KECIL-A/B |
-| 5 | Structure | 5 | Satu tugas per file dipertahankan; event baru terpisah bersih (config/world/main/render) |
+| # | Kriteria | v2 | v3 | Alasan |
+| --- | --- | --- | --- | --- |
+| 1 | Complete game, shown | 5 | 5 | Title + 2 run HUD + end screen restart; pisau + oven kini benar-benar terbaca sebagai ancaman bernama di brief |
+| 2 | Fun & depth | 4 | 4 | Kejaran kini TERLIHAT di cover (petani dekat + SPOTTED! + meter merah) — perbaikan utama v3 tercapai; tetap 4 karena hide/slide masih hanya lewat label kecil |
+| 3 | Feel & polish | 4 | 4 | SPOTTED! kini terlihat di cover (banner + frame + meter merah), bukan hanya bersuara — keuntungan nyata; tetap 4 karena lompat tanpa efek visual khusus (KECIL-2) dan ujung pisau menyentuh teks banner (KECIL-1) |
+| 4 | Look & originality | 4 | 4 | Pisau/oven/HOT!/label gerbang membaik; tetap 4 karena pita langit tengah masih kosong di cover + kitchen dan kalkun masih kecil di frame |
+| 5 | Structure | 5 | 5 | Satu tugas per file dipertahankan; perubahan terkurung di render.js (visual) + shots.js (staging) |
 
-## Cacat (semua KECIL — jangan perbaiki sebelum cutoff 09:00 WIB)
+**Apakah v3 menjawab kelemahan yang terlihat juri? Ya, pada dua titik yang didiagnosis
+builder.** v2 kalah duel terutama di #4 (look) dan #2 (kejaran tak terlihat); v3
+menarget persis keduanya dengan perubahan yang terlihat di frame terbesar (cover).
+Yang tidak dikejar v3 (kalkun lebih besar, efek lompat, isi langit tengah) adalah
+pekerjaan staging/skala yang lebih besar — benar tidak dipaksakan sebelum cutoff.
 
-- **KECIL-1 (diwarisi builder, terkonfirmasi):** label "FOREST GATE" di `4-escaped.jpg`
-  sedikit menimpa elips pohon kiri gerbang (teks di atas dedaunan). Kosmetik, makna tidak kabur.
-- **KECIL-2 (diwarisi builder, terkonfirmasi):** pisau jatuh di `1-cover.jpg` ujungnya
-  menyentuh area progress bar HUD (x≈560, y≈40). Terbaca sebagai jatuh dari langit, bukan merusak.
-- **KECIL-3 (diwarisi builder, terkonfirmasi):** lompat tanpa efek visual khusus (hanya animasi
-  kalkun; partikel debu hanya saat mendarat). Suara sudah ada; efek tambahan butuh staging
+## Cacat (semua KECIL — jangan perbaiki sebelum cutoff 21:00 WIB)
+
+- **KECIL-1 (diakui builder, terkonfirmasi):** ujung pisau menyentuh teks banner —
+  cover: ujung di antara "SPOTTED!" dan "RUN!" (menyentuh tepi atas huruf); kitchen:
+  ujung menyentuh atas huruf "D" pada "YARD". Teks tetap sepenuhnya legibel di
+  kedua shot. Kosmetik.
+- **KECIL-2 (diwarisi v2):** lompat tanpa efek visual khusus (hanya animasi kalkun;
+  partikel debu hanya saat mendarat). Suara sudah ada; efek tambahan butuh staging
   ulang shot — risiko > manfaat sebelum cutoff.
-- **Observasi (bukan cacat):** probe oscillator-count flaky (run 1: 14/16, run 2: 16/16).
-  Penghitungan osc sensitif timing; suara terbukti berbunyi di semua run.
+- **KECIL-3 (diwarisi v2):** `file://` tetap gagal (Chrome blokir ES module — pola
+  bawaan kit, didokumentasikan di README). Main offline yang didukung: `node serve.ts`
+  / harness make.fun; 0 request eksternal terverifikasi.
+- **Observasi (bukan cacat):** probe oscillator-count flaky di run pertama (2 FAIL,
+  lalu 16/16 di dua run berikutnya). Pola sama seperti v2.
+- **Observasi (bukan cacat):** pita langit tengah masih kosong di cover + kitchen;
+  kalkun masih kecil di frame — sudah tercermin di skor #4 = 4.
 
 ## Tidak diuji
 
-Bundle `makefun check --transcripts` + submit (tugas parent); penilaian juri sesungguhnya.
+Sim-judge (gerbang parent), bundle `makefun check --transcripts` + push + submit
+(tugas parent); penilaian juri sesungguhnya.
 
 ## Rekomendasi
 
-Submit apa adanya — tidak ada cacat yang membenarkan fixer sebelum cutoff ronde 2 (09:00 WIB).
+Submit apa adanya — tidak ada cacat yang membenarkan fixer sebelum cutoff ronde 3
+(21:00 WIB 28 Nov). Langkah berikut tetap milik parent: sim-judge v3 vs v2, push
+(via PAT — screenshot berubah byte-nya dan HARUS ada di remote), bundle, submit.
