@@ -1,0 +1,98 @@
+{
+ "slug": "turkey-run-game-01",
+ "verdict": "WORTH SUBMIT",
+ "win_rate": 1.0,
+ "n_calls": 2,
+ "total_tokens": 10937,
+ "duels": [
+  [
+   "OLD",
+   {
+    "x": "NEW",
+    "y": "OLD",
+    "calls": [
+     {
+      "order": [
+       "NEW",
+       "OLD"
+      ],
+      "winner": "NEW",
+      "margin": 1,
+      "deciding_criterion": 3,
+      "per_criterion": [
+       {
+        "criterion": 1,
+        "winner": "tie",
+        "note": "Both entries are fully complete turkey escape games with title screens, HUDs, gameplay, and end screens."
+       },
+       {
+        "criterion": 2,
+        "winner": "tie",
+        "note": "Both entries feature identical game mechanics, hiding spots, stage progression, and hazards."
+       },
+       {
+        "criterion": 3,
+        "winner": "A",
+        "note": "Entry A adds clearer visual state alerts ('SPOTTED! RUN!') when detected by the farmer, improving feedback."
+       },
+       {
+        "criterion": 4,
+        "winner": "tie",
+        "note": "Both share the same autumn palette, vector graphics, and visual layout."
+       },
+       {
+        "criterion": 5,
+        "winner": "tie",
+        "note": "Both feature clean modular source code layouts."
+       }
+      ],
+      "reason": "Entry A edges out Entry B on polish by adding prominent on-screen state feedback ('SPOTTED! RUN!') to clearly notify the player when detected.",
+      "tokens": 5618
+     },
+     {
+      "order": [
+       "OLD",
+       "NEW"
+      ],
+      "winner": "NEW",
+      "margin": 1,
+      "deciding_criterion": 3,
+      "per_criterion": [
+       {
+        "criterion": 1,
+        "winner": "tie",
+        "note": "Both entries feature a complete playable turkey escape game with HUD, menu, and end screen."
+       },
+       {
+        "criterion": 2,
+        "winner": "tie",
+        "note": "Both entries share the same mechanics including jumping, sliding, hiding, and stage transitions."
+       },
+       {
+        "criterion": 3,
+        "winner": "B",
+        "note": "Entry B adds explicit screen alert overlays ('SPOTTED! RUN!') for clearer visual feedback."
+       },
+       {
+        "criterion": 4,
+        "winner": "tie",
+        "note": "Both entries use identical visual art style and autumn color palette."
+       },
+       {
+        "criterion": 5,
+        "winner": "tie",
+        "note": "Both entries feature clean source outlines organized neatly per module."
+       }
+      ],
+      "reason": "Entry B improves on Entry A in Criterion 3 (Feel & Polish) by introducing clear visual alert overlays ('SPOTTED! RUN!') during key game state changes, making player feedback much clearer.",
+      "tokens": 5319
+     }
+    ],
+    "avg_margin": 1.0,
+    "winner": "NEW",
+    "n_calls": 2,
+    "total_tokens": 10937
+   }
+  ]
+ ]
+}
