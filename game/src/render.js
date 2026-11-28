@@ -168,7 +168,9 @@ function drawBackground(ctx, state, t) {
     ctx.fillStyle = '#2f6b2f';
     ellipse(ctx, gx - 96, GROUND_Y - 200, 46, 30);
     ellipse(ctx, gx + 96, GROUND_Y - 200, 46, 30);
-    text(ctx, 'FOREST GATE', gx, GROUND_Y - 214, 20, '#fff8e6', 'center');
+    // Label sits above the tree canopies (tops at GROUND_Y-230), not
+    // across them — v2's label overlapped the left tree (KECIL-A).
+    text(ctx, 'FOREST GATE', gx, GROUND_Y - 240, 20, '#fff8e6', 'center');
   }
 }
 
@@ -307,6 +309,9 @@ function drawObstacle(ctx, ob, t) {
     ctx.fillStyle = '#3f7a2e';
     ctx.fillRect(x + w / 2 - 3, y - 6, 6, 12);
   } else if (kind === 'oven') {
+    // Warm glow so the oven reads as HOT at a glance, not a grey box.
+    ctx.fillStyle = 'rgba(255,122,28,0.20)';
+    ellipse(ctx, x + w / 2, y + h / 2, w * 0.9, h * 0.85);
     ctx.fillStyle = '#4a4a52';
     rr(ctx, x, y, w, h, 8); ctx.fill();
     ctx.fillStyle = '#2c2c32';
@@ -323,7 +328,14 @@ function drawObstacle(ctx, ob, t) {
     ctx.fillStyle = '#c8ccd4';
     ctx.fillRect(x + 14, y + 58, w - 28, 6);
     ctx.fillRect(x + 14, y + 72, w - 28, 6);
-    text(ctx, 'HOT!', x + w / 2, y - 10, 18, '#ff5a1f', 'center');
+    // Dark outline so HOT! reads against the bright autumn sky.
+    ctx.font = 'bold 20px Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'rgba(60,20,8,0.85)';
+    ctx.strokeText('HOT!', x + w / 2, y - 10);
+    text(ctx, 'HOT!', x + w / 2, y - 10, 20, '#ff5a1f', 'center');
   } else if (kind === 'knife') {
     if (ob.falling) {
       // Warning shadow on the ground where it will land.
@@ -335,6 +347,11 @@ function drawObstacle(ctx, ob, t) {
     ctx.save();
     ctx.translate(x + w / 2, y + h / 2);
     ctx.rotate(ob.falling ? 0.5 : 0.15);
+    // Scale with the obstacle's height: live knives spawn at 34x70
+    // (scale 1, unchanged); staged shots use a bigger knife so the
+    // carving knife — a named threat in the brief — reads at a glance.
+    const ks = h / 70;
+    ctx.scale(ks, ks);
     // Handle at the top, blade tapering to a point at the bottom:
     // a falling carving knife, tip first — not a paper plane.
     ctx.fillStyle = '#4a2c14';
