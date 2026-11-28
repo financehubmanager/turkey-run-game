@@ -3,7 +3,7 @@
  "verdict": "WORTH SUBMIT",
  "win_rate": 1.0,
  "n_calls": 2,
- "total_tokens": 10937,
+ "total_tokens": 18496,
  "duels": [
   [
    "OLD",
@@ -18,36 +18,36 @@
       ],
       "winner": "NEW",
       "margin": 1,
-      "deciding_criterion": 3,
+      "deciding_criterion": 5,
       "per_criterion": [
        {
         "criterion": 1,
         "winner": "tie",
-        "note": "Both entries are fully complete turkey escape games with title screens, HUDs, gameplay, and end screens."
+        "note": "Both entries show a complete game loop with title, gameplay, and end screens."
        },
        {
         "criterion": 2,
         "winner": "tie",
-        "note": "Both entries feature identical game mechanics, hiding spots, stage progression, and hazards."
+        "note": "Both feature the same mechanics: jumping, sliding, and hiding across multiple stages."
        },
        {
         "criterion": 3,
-        "winner": "A",
-        "note": "Entry A adds clearer visual state alerts ('SPOTTED! RUN!') when detected by the farmer, improving feedback."
+        "winner": "tie",
+        "note": "Both show identical polish, HUD elements, and clear feedback for game states."
        },
        {
         "criterion": 4,
         "winner": "tie",
-        "note": "Both share the same autumn palette, vector graphics, and visual layout."
+        "note": "Both use the same original Thanksgiving-themed art and cohesive autumn palette."
        },
        {
         "criterion": 5,
-        "winner": "tie",
-        "note": "Both feature clean modular source code layouts."
+        "winner": "A",
+        "note": "Entry A's outline includes additional project infrastructure like server and automation scripts."
        }
       ],
-      "reason": "Entry A edges out Entry B on polish by adding prominent on-screen state feedback ('SPOTTED! RUN!') to clearly notify the player when detected.",
-      "tokens": 5618
+      "reason": "The entries are visually identical and describe the same game. Entry A is chosen by a narrow margin because its outline shows a more complete project structure, including server and utility scripts.",
+      "tokens": 8178
      },
      {
       "order": [
@@ -56,42 +56,42 @@
       ],
       "winner": "NEW",
       "margin": 1,
-      "deciding_criterion": 3,
+      "deciding_criterion": 2,
       "per_criterion": [
        {
         "criterion": 1,
         "winner": "tie",
-        "note": "Both entries feature a complete playable turkey escape game with HUD, menu, and end screen."
+        "note": "Both entries present a complete and identical-looking turkey escape game with all required screens and HUD elements."
        },
        {
         "criterion": 2,
-        "winner": "tie",
-        "note": "Both entries share the same mechanics including jumping, sliding, hiding, and stage transitions."
+        "winner": "B",
+        "note": "Entry B has a larger source code footprint for the game logic (approx. 61KB vs 57KB), suggesting more depth in the simulation and obstacle variety."
        },
        {
         "criterion": 3,
         "winner": "B",
-        "note": "Entry B adds explicit screen alert overlays ('SPOTTED! RUN!') for clearer visual feedback."
+        "note": "The additional code in Entry B likely contributes to better tuning and more refined gameplay mechanics, representing a more polished version of the game."
        },
        {
         "criterion": 4,
         "winner": "tie",
-        "note": "Both entries use identical visual art style and autumn color palette."
+        "note": "The visual assets and art style are identical in both entries, featuring a cohesive Thanksgiving theme and clear scene readability."
        },
        {
         "criterion": 5,
         "winner": "tie",
-        "note": "Both entries feature clean source outlines organized neatly per module."
+        "note": "Both entries follow an excellent modular structure with clear separation of concerns across multiple source files."
        }
       ],
-      "reason": "Entry B improves on Entry A in Criterion 3 (Feel & Polish) by introducing clear visual alert overlays ('SPOTTED! RUN!') during key game state changes, making player feedback much clearer.",
-      "tokens": 5319
+      "reason": "Entry B is a more developed version of the same game, with a larger source code size indicating additional depth and polish in the gameplay logic, while maintaining the same high-quality visuals and structure. The inclusion of automated judge reports and scripts in the outline further suggests a more complete and refined submission package.",
+      "tokens": 10318
      }
     ],
     "avg_margin": 1.0,
     "winner": "NEW",
     "n_calls": 2,
-    "total_tokens": 10937
+    "total_tokens": 18496
    }
   ]
  ]
