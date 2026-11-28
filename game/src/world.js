@@ -184,6 +184,16 @@ export function createWorld(seed) {
     // Jump / double jump / slide / hide. One mid-air jump per leap lets
     // the turkey clear two dangers piled together.
     if (input.jump && !t.hidden && (t.onGround || t.airJumps < 1)) {
+      // v4: takeoff dust — the jump finally has a visible effect (brief
+      // #3: feedback when the turkey acts), matching the landing burst.
+      // Fixed puffs, no rng draws, so the spawn sequence — and the
+      // playtest — stay identical to v3.
+      if (t.onGround) {
+        const puffs = [[-14, -30, -50], [-4, -44, -70], [6, -20, -40], [16, -52, -90], [-22, -14, -30], [24, -36, -60]];
+        for (const [dx, vy, vx] of puffs) {
+          state.particles.push({ x: TURKEY_X + 10 + dx, y: GROUND_Y - 2, vx, vy, life: 0.45, max: 0.45, size: 5, color: '#e3d3ae' });
+        }
+      }
       if (!t.onGround) t.airJumps += 1;
       t.vy = RUN.jumpVelocity;
       t.onGround = false;
